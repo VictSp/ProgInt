@@ -28,5 +28,7 @@
             </div>
             <button class="btn btn-primary">Создать тему</button>
         </form>
+        @else
+            <p>Чтобы создать тему, войдите в аккаунт.</p>
     @endauth
 @endsection

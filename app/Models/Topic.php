@@ -12,6 +12,7 @@ class Topic extends Model
         'title',
         'category_id',
         'user_id',
+        'content',
     ];
 //Одна тема принадлежит одной категории
     public function category(): BelongsTo

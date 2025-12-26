@@ -28,7 +28,7 @@ class PostController extends Controller
     // Удаление сообщения (только автор)
     public function destroy(Post $post)
     {
-        if ($post->user_id !== Auth::id()) {
+        if ($post->user_id !== auth()->id() && !auth()->user()->is_admin) {
             abort(403);
         }
 

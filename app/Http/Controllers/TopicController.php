@@ -36,7 +36,7 @@ class TopicController extends Controller
     // Удаление темы (только автор)
     public function destroy(Topic $topic)
     {
-        if ($topic->user_id !== Auth::id()) {
+        if ($topic->user_id !== auth()->id() && !auth()->user()->is_admin) {
             abort(403);
         }
 

@@ -37,11 +37,13 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        @can('admin')
-                        <a href="{{ route('admin.categories.index') }}" class="nav-link">
-                            Админка
-                        </a>
-                        @endcan
+                        @auth
+                            @if(auth()->user()->is_admin)
+                                <a class="nav-link" href="{{ route('filament.pages.dashboard') }}">
+                                    Админка
+                                </a>
+                            @endif
+                        @endauth
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

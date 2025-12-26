@@ -32,5 +32,7 @@
             </div>
             <button class="btn btn-primary">Отправить</button>
         </form>
+        @else
+            <p>Чтобы создать пост, войдите в аккаунт.</p>
     @endauth
 @endsection
