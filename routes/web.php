@@ -57,3 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])
         ->name('admin.categories.destroy');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
