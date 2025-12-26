@@ -48,15 +48,19 @@ Route::middleware(['auth'])->group(function () {
 // ----------
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/admin/categories', [CategoryController::class, 'adminIndex'])
-        ->name('admin.categories.index');
+    Route::middleware('can:admin')->group(function () {
 
-    Route::post('/admin/categories', [CategoryController::class, 'store'])
-        ->name('admin.categories.store');
+        Route::get('/admin/categories', [CategoryController::class, 'adminIndex'])
+            ->name('admin.categories.index');
 
-    Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])
-        ->name('admin.categories.destroy');
+        Route::post('/admin/categories', [CategoryController::class, 'store'])
+            ->name('admin.categories.store');
+
+        Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])
+            ->name('admin.categories.destroy');
+    });
 });
+
 
 Auth::routes();
 

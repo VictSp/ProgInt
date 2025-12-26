@@ -16,6 +16,7 @@
     <!-- Scripts -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet"> 
     <script src="{{ mix('/js/app.js') }}"></script> 
+
 </head>
 <body>
     <div id="app">
@@ -36,6 +37,11 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        @can('admin')
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link">
+                            Админка
+                        </a>
+                        @endcan
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

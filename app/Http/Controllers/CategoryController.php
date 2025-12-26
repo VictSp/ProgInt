@@ -28,7 +28,8 @@ class CategoryController extends Controller
 
     public function adminIndex()
     {
-        $this->authorizeAdmin();
+        abort_unless(\Gate::allows('admin'), 403);
+
 
         $categories = Category::all();
 
@@ -37,7 +38,8 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorizeAdmin();
+        abort_unless(\Gate::allows('admin'), 403);
+
 
         $request->validate([
             'title' => 'required|string|max:255',
@@ -51,20 +53,12 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        $this->authorizeAdmin();
+        abort_unless(\Gate::allows('admin'), 403);
 
         $category->delete();
 
         return redirect()->back();
     }
 
-    // ----- ПРОВЕРКА АДМИНА -----
-
-    private function authorizeAdmin(): void
-    {
-        if (!Auth::user() || !Auth::user()->is_admin) {
-            abort(403);
-        }
-    }
 }
 
