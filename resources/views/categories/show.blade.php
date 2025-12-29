@@ -10,14 +10,21 @@
     <h4>Темы</h4>
 
     @auth
-        <form action="{{ route('topics.store', $category) }}" method="POST" class="mb-4">
-            @csrf
-            <div class="mb-3">
-                <input type="text" name="title" class="form-control"
-                       placeholder="Название темы" required>
-            </div>
-            <button class="btn btn-primary">Создать тему</button>
-        </form>
+            <form method="POST" action="{{ route('topics.store', $category) }}">
+        @csrf
+
+        <div class="mb-3">
+            <label class="form-label">Название темы</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Сообщение</label>
+            <textarea name="content" class="form-control" rows="5" required></textarea>
+        </div>
+
+        <button class="btn btn-primary">Создать тему</button>
+    </form>
     @endauth
 
     <ul class="list-group">

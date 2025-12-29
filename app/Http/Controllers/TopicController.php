@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Post;
 class TopicController extends Controller
 {
     // Просмотр темы + сообщений
@@ -22,15 +22,22 @@ class TopicController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
 
-        Topic::create([
+        $topic = Topic::create([
             'title' => $request->title,
             'category_id' => $category->id,
-            'user_id' => Auth::id(),
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('categories.show', $category);
+        Post::create([
+            'topic_id' => $topic->id,
+            'user_id' => auth()->id(),
+            'content' => $request->input('content'),
+        ]);
+
+        return redirect()->route('topics.show', $topic);
     }
 
     // Удаление темы (только автор)
