@@ -8,23 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-    // Главная страница — список категорий
+    // Главная страница - список категорий
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::withCount('topics')->get();
 
         return view('categories.index', compact('categories'));
     }
 
-    // Просмотр одной категории + её тем
+    // Просмотр одной категории и ее тем
     public function show(Category $category)
     {
         $topics = $category->topics()->latest()->get();
 
         return view('categories.show', compact('category', 'topics'));
     }
-
-    // ----- АДМИН -----
 
     public function adminIndex()
     {

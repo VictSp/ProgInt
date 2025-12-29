@@ -24,6 +24,7 @@ class CategoryResource extends Resource
     protected static ?string $modelLabel = 'Категория';
     protected static ?string $navigationGroup = 'Форум';
     protected static ?int $navigationSort = 1;
+    //Форма создания/редактирования категории
     public static function form(Form $form): Form
     {
         return $form
@@ -39,7 +40,7 @@ class CategoryResource extends Resource
                     ->maxLength(1000),
             ]);
     }
-
+//Таблица списка категорий
     public static function table(Table $table): Table
     {
         return $table

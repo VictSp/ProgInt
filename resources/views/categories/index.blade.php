@@ -1,19 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Категории')
-
 @section('content')
-    <h1>Категории форума</h1>
+<div class="container">
+    <h1 class="mb-4">Категории форума</h1>
 
-    <ul class="list-group">
+    <div class="list-group">
         @forelse($categories as $category)
-            <li class="list-group-item">
-                <a href="{{ route('categories.show', $category) }}">
-                    {{ $category->title }}
-                </a>
-            </li>
+            <a href="{{ route('categories.show', $category) }}"
+               class="list-group-item list-group-item-action">
+                <h5 class="mb-1">{{ $category->title }}</h5>
+                <p class="mb-1 text-muted">{{ $category->description }}</p>
+                <small>Тем: {{ $category->topics_count }}</small>
+            </a>
         @empty
-            <li class="list-group-item">Категорий пока нет</li>
+            <div class="alert alert-info">
+                Категорий пока нет
+            </div>
         @endforelse
-    </ul>
+    </div>
+</div>
 @endsection

@@ -1,38 +1,44 @@
 @extends('layouts.app')
 
-@section('title', $topic->title)
-
 @section('content')
-    <h1>{{ $topic->title }}</h1>
+<div class="container">
+    <h2>{{ $topic->title }}</h2>
+    <p class="text-muted">
+        Автор: {{ $topic->user->name }}
+    </p>
 
-    <ul class="list-group mb-3">
-        @foreach($posts as $post)
-            <li class="list-group-item">
-                <strong>{{ $post->user->name }}:</strong>
-                {{ $post->content }}
+    <hr>
 
-                @auth
-                    @if($post->user_id === auth()->id())
-                        <form method="POST" action="{{ route('posts.destroy', $post) }}" class="mt-2">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger">Удалить</button>
-                        </form>
-                    @endif
-                @endauth
-            </li>
-        @endforeach
-    </ul>
+    <h5>Сообщения</h5>
+
+    @foreach($topic->posts as $post)
+        <div class="card mb-2">
+            <div class="card-body">
+                <p>{{ $post->content }}</p>
+                <small class="text-muted">
+                    {{ $post->user->name }}
+                </small>
+
+                @can('delete', $post)
+                    <form action="{{ route('posts.destroy', $post) }}" method="POST" class="mt-2">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger">Удалить</button>
+                    </form>
+                @endcan
+            </div>
+        </div>
+    @endforeach
 
     @auth
-        <form method="POST" action="{{ route('posts.store', $topic) }}">
+        <form action="{{ route('posts.store', $topic) }}" method="POST" class="mt-4">
             @csrf
             <div class="mb-3">
-                <textarea name="content" class="form-control" placeholder="Ваше сообщение"></textarea>
+                <textarea name="content" class="form-control"
+                          placeholder="Ваше сообщение" required></textarea>
             </div>
             <button class="btn btn-primary">Отправить</button>
         </form>
-        @else
-            <p>Чтобы создать пост, войдите в аккаунт.</p>
     @endauth
+</div>
 @endsection

@@ -11,7 +11,7 @@ use App\Http\Controllers\PostController;
 |--------------------------------------------------------------------------
 */
 
-// Главная страница — список категорий
+// Главная страница - список категорий
 Route::get('/', [CategoryController::class, 'index'])
     ->name('categories.index');
 
@@ -23,9 +23,9 @@ Route::get('/categories/{category}', [CategoryController::class, 'show'])
 Route::get('/topics/{topic}', [TopicController::class, 'show'])
     ->name('topics.show');
 
-// ----------
-// Защищённые маршруты (только авторизованные пользователи)
-// ----------
+
+// Маршруты длятолько авторизованных
+
 Route::middleware(['auth'])->group(function () {
 
     // Темы
@@ -42,25 +42,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])
         ->name('posts.destroy');
 });
-
-// ----------
-// Админка (категории)
-// ----------
-//Route::middleware(['auth'])->group(function () {
-//
-//   Route::middleware('can:admin')->group(function () {
-//
-//        Route::get('/admin/categories', [CategoryController::class, 'adminIndex'])
-//            ->name('admin.categories.index');
-//
-//        Route::post('/admin/categories', [CategoryController::class, 'store'])
-//            ->name('admin.categories.store');
-//
-//        Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])
-//            ->name('admin.categories.destroy');
-//    });
-//});
-
 
 Auth::routes();
 
